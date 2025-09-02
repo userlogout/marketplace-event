@@ -8,6 +8,6 @@ public class UserController {
 
     @GetMapping("/user/profile")
     public String hello() {
-        return "Hello from Auth Service!";
+        return "Hello from Auth Service profile!";
     }
 }

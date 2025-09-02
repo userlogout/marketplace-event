@@ -8,14 +8,12 @@ spring:
         - id: user
           uri: http://user-service:8080
           predicates:
-            - Path=/user/auth/**
-            - Path=/user/profile/**
+            - Path=/user/**
         - id: notification
           uri: http://notification-service:8080
           predicates:
-              - Path=/notification/messages/**
+            - Path=/notification/**
         - id: point-service
           uri: http://point-service:8080
           predicates:
-            - Path=/point/info/**
-            - Path=/point/goods/**
+            - Path=/point/**

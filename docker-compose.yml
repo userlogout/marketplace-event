@@ -8,20 +8,50 @@ services:
       - user-service
       - point-service
       - notification-service
+      - marketplace-db
 
   user-service:
     build: ./user
     ports:
       - 8081:8080
+    depends_on:
+      -  marketplace-db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/marketplace
+      - SPRING_DATASOURCE_USERNAME=main
+      - SPRING_DATASOURCE_PASSWORD=123456
 
   point-service:
     build: ./point-service
     ports:
       - 8082:8080
+    depends_on:
+      -  marketplace-db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/marketplace
+      - SPRING_DATASOURCE_USERNAME=main
+      - SPRING_DATASOURCE_PASSWORD=123456
+
 
   notification-service:
     build: ./notification
     ports:
       - 8083:8080
+    depends_on:
+      -  marketplace-db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/marketplace
+      - SPRING_DATASOURCE_USERNAME=main
+      - SPRING_DATASOURCE_PASSWORD=123456
+
+  marketplace-db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_DB: marketplace
+      POSTGRES_USER: main
+      POSTGRES_PASSWORD: 123456
+    ports:
+      - 5432:5432
 
 
