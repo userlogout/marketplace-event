@@ -2,6 +2,7 @@
 .idea/
 *.iml
 out/
+.idea/*
 .idea/marketplace-event.iml
 .idea/misc.xml
 .idea/modules.xml

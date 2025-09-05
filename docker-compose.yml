@@ -3,7 +3,7 @@ services:
   gateway:
     build: ./gateway
     ports:
-     - 8080:8080
+     - "8080:8080"
     depends_on:
       - user-service
       - point-service
@@ -13,45 +13,46 @@ services:
   user-service:
     build: ./user
     ports:
-      - 8081:8080
+      - "8081:8080"
     depends_on:
       -  marketplace-db
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/marketplace
-      - SPRING_DATASOURCE_USERNAME=main
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://marketplace-db:5432/marketplace
+      - SPRING_DATASOURCE_USERNAME=marketplace
       - SPRING_DATASOURCE_PASSWORD=123456
 
   point-service:
     build: ./point-service
     ports:
-      - 8082:8080
+      - "8082:8080"
     depends_on:
       -  marketplace-db
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/marketplace
-      - SPRING_DATASOURCE_USERNAME=main
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://marketplace-db:5432/marketplace
+      - SPRING_DATASOURCE_USERNAME=marketplace
       - SPRING_DATASOURCE_PASSWORD=123456
-
 
   notification-service:
     build: ./notification
     ports:
-      - 8083:8080
+      - "8083:8080"
     depends_on:
       -  marketplace-db
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/marketplace
-      - SPRING_DATASOURCE_USERNAME=main
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://marketplace-db:5434/marketplace
+      - SPRING_DATASOURCE_USERNAME=marketplace
       - SPRING_DATASOURCE_PASSWORD=123456
 
   marketplace-db:
     image: postgres:15
+    container_name: marketplace-postgres
     restart: always
     environment:
       POSTGRES_DB: marketplace
-      POSTGRES_USER: main
+      POSTGRES_USER: marketplace
       POSTGRES_PASSWORD: 123456
+      POSTGRES_HOST_AUTH_METHOD: md5
     ports:
-      - 5432:5432
+      - "5434:5432"
 
 
